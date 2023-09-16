@@ -45,21 +45,27 @@
 
       //ピンの立て方
       var myLatlng = new google.maps.LatLng(35.6591, 139.7017); //座標部分を取得して表示
-      var marker = new google.maps.Marker({
+      var markerA = new google.maps.Marker({
         position: myLatlng,
         map: map,
         title: "自販機A"
       });
-      marker.addListener('click', function () {
-        map.setCenter(marker.getPosition());
+      markerA.addListener('click', function () {
+        map.setCenter(markerA.getPosition())
+        window.location.href = 'https://qiita.com/tiri'; //表示させたい画面
       });
 
       var myLatlng = new google.maps.LatLng(35.6593, 139.7027);
-      new google.maps.Marker({
+      var markerB = new google.maps.Marker({
         position: myLatlng,
         map: map,
         title: "自販機B"
       });
+      markerB.addListener('click', function () {
+        map.setCenter(markerB.getPosition())
+        window.location.href = 'https://marketplace.visualstudio.com/items?itemName=CREATEME.auto-readme'; //表示させたい画面
+      });
+
     }
 
 

@@ -7,7 +7,7 @@ export default async function handler(
   ) {
     try {
       const connection = await mysql_connection();
-      const result = await connection.query('SELECT * from vending_table');
+      const result = await connection.query('SELECT * from vending_machine');
       connection.end();
       console.log(result[0]);
       res.status(200).json({ message: '接続に成功しました。' , contents: result[0]});

@@ -17,6 +17,8 @@ TZ=タイムゾーン
 docker compose build
 ```
 
+インストール
+
 ```bash
 docker compose run --rm nextjs-app npm i
 ```

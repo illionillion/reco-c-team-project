@@ -19,8 +19,8 @@ export const Header: FC = () => {
           </Button>
         </InputRightAddon>
       </InputGroup>
-      <Box flex={1} justifyContent={"center"} display={"flex"}>
-        <Text fontSize={"1.5rem"} color={'#fff'}>自販機サーチャー</Text>
+      <Box flex={1} justifyContent="center" display="flex">
+        <Text fontSize="1.5rem" color="#fff">自販機サーチャー</Text>
       </Box>
     </Box>
   );

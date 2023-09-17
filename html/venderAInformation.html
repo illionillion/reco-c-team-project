@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* tableのCSS設定*/
+        .center-table {
+            margin: 50px auto;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        .center-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .product-cell {
+            vertical-align: middle;
+        }
+
+        .product-image {
+            max-width: 100px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* プロフィール情報のCSS*/
+        .profile-info {
+            float: left;
+            width: 30%;
+            padding: 10px;
+            margin: 0 auto;
+        }
+
+        /* 商品一覧というヘッダーのCSS */
+        .header {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 0; /* 上下の余白をリセット */
+            padding: 0;
+        }
+    </style>
+</head>
+<header>
+    <h1>名前・住所</h1>
+</header>
+<body>
+    <div class="profile-info">
+        <img src="./img/vendingmachine.jfif" alt="自動販売機"><br>
+        <strong>住所:</strong> ○県×市△町1-2-3<br>
+        <strong>電子決済:</strong>PayPay<br>
+    </div>
+   
+    <div class="header">
+        <h1>商品一覧</h1>
+    </div>
+
+    <table class="center-table">
+        <tr>
+            <td>商品名</td>
+            <td>値段</td>
+            <td>ジャンル</td>
+            <td>温度</td>
+        </tr>
+        <tr>
+            <td class="product-cell">
+                <img src="./img/aquarius.jfif" alt="アクエリアス" class="product-image"><br>
+                アクエリアス
+            </td>
+            <td>180円</td>
+            <td>スポーツ飲料</td>
+            <td>冷たい</td>
+        </tr>
+        <tr>
+            <td class="product-cell">
+                <img src="./img/cola.jfif" alt="コーラ" class="product-image"><br>
+                コーラ
+            </td>
+            <td>180円</td>
+            <td>炭酸飲料</td>
+            <td>冷たい</td>
+        </tr>
+    </table>
+</body>
+</html>

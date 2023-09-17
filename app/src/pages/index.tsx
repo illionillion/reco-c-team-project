@@ -1,7 +1,7 @@
 import { GMap } from '@/components/GMap';
 import { Header } from '@/components/Header';
-import { VendingType } from '@/lib/@type/vending';
-import { GetStaticProps, NextPage } from 'next';
+import type { VendingType } from '@/lib/@type/vending';
+import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 interface HomeProps {
   contents: VendingType[]
@@ -23,7 +23,7 @@ const Home:NextPage<HomeProps> = ({contents}) => {
       </main>
     </>
   );
-}
+};
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
 
@@ -50,4 +50,4 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   }
 };
 
-export default Home
+export default Home;

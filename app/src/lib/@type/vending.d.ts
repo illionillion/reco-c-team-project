@@ -3,5 +3,5 @@ export interface VendingType {
   id: number;
   location_x: string;
   location_y: string;
-  pay: "cash" | "card";
+  pay: 'cash' | 'cashress';
 }

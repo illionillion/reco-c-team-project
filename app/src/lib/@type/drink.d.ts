@@ -3,7 +3,7 @@ export interface Drink {
     vid: number
     product_name: string
     price: string
-    temp: "hot" | "cold"
-    category: "soda", "sports", "can", "tea", "coffee", "water", "juice", "energy"
+    temp: 'hot' | 'cold'
+    category: 'soda', 'sports', 'can', 'tea', 'coffee', 'water', 'juice', 'energy'
     url: string
 }

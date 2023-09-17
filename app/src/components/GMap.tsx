@@ -13,7 +13,7 @@ const mapContainerStyle = {
 };
 
 interface GMapProps {
-    contents: VendingType[]
+  contents: VendingType[]
 }
 
 export const GMap: FC<GMapProps> = ({ contents }) => {
@@ -41,8 +41,8 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   // 飲み物
   const [drinks, setDrinks] = useState<Drink[]>([]);
   // スピナー
-  const [isSpinnerOpen, {on: onSpinnerOpen, off: onSpinnerOff}] = useBoolean();
-  const [isVendingModalOpen, {on: onVendingModalOpen, off: onVendingModalOff}] = useBoolean();
+  const [isSpinnerOpen, { on: onSpinnerOpen, off: onSpinnerOff }] = useBoolean();
+  const [isVendingModalOpen, { on: onVendingModalOpen, off: onVendingModalOff }] = useBoolean();
   const get_vending = async () => {
     try {
       // onSpinnerOpen()
@@ -73,26 +73,30 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   };
 
   useEffect(() => {
-    onSpinnerOpen();
 
-    navigator.geolocation.getCurrentPosition((pos) => {
-      const lat = pos.coords.latitude;
-      const lng = pos.coords.longitude;
-      const latlng = new google.maps.LatLng(lat, lng); //中心の緯度, 経度
-      setCurrentPosition(latlng);
-      get_vending();
-    }, () => {
-      const latlng = new google.maps.LatLng(35.6812405, 139.7649361); //中心の緯度, 経度
-      setCurrentPosition(latlng);
-    });
-  }, []);
+    if (isLoaded) {
+
+      onSpinnerOpen();
+
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        const latlng = new google.maps.LatLng(lat, lng); //中心の緯度, 経度
+        setCurrentPosition(latlng);
+        get_vending();
+      }, () => {
+        const latlng = new google.maps.LatLng(35.6812405, 139.7649361); //中心の緯度, 経度
+        setCurrentPosition(latlng);
+      });
+    }
+  }, [isLoaded]);
 
 
   if (loadError) return 'Error';
   if (!isLoaded) return 'Load中';
   return (
     <>
-      {currentVenndings && <VendingModal drinks={drinks} isOpen={isVendingModalOpen} vending={currentVenndings} onClose={onVendingModalOff}/>}
+      {currentVenndings && <VendingModal drinks={drinks} isOpen={isVendingModalOpen} vending={currentVenndings} onClose={onVendingModalOff} />}
       <SpinnerModal isOpen={isSpinnerOpen} onClose={onSpinnerOff} />
       <GoogleMap
         id='map'

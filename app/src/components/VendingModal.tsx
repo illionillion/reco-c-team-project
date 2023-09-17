@@ -1,6 +1,6 @@
 import type { Drink } from '@/lib/@type/drink';
 import type { VendingType } from '@/lib/@type/vending';
-import { Box, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
+import { Box, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import type { FC } from 'react';
 
 interface VendingModalProps {
@@ -23,13 +23,13 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
         }
     }
 
-
-
     return <>
         <Modal isCentered isOpen={isOpen} size="6xl" onClose={onClose}>
             <ModalOverlay />
-            <ModalContent h={'xl'}>
-                <ModalCloseButton />
+            <ModalContent h={'xl'} overflowY={"hidden"}>
+                <ModalHeader>
+                    <ModalCloseButton />
+                </ModalHeader>
                 <ModalBody>
                     <Flex justifyContent='center'>
                         <Box flex='1'>
@@ -41,10 +41,10 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
                             </Flex>
                             <Image my={5} src='https://ascii.jp/img/2021/04/05/3182808/o/b87d497b6c9889f9.jpg' />
                         </Box>
-                        <Box flex='1'>
+                        <Box flex='1' h={'xl'} overflowY={'auto'}>
                             <TableContainer>
                                 <Table variant='simple'>
-                                    <Thead>
+                                    <Thead position="sticky" top={0} zIndex="docked">
                                         <Tr>
                                             <Th>商品名</Th>
                                             <Th isNumeric>価格</Th>
@@ -56,7 +56,14 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
                                         {
                                             drinks.map((drink, index) => {
                                                 return <Tr key={index}>
-                                                    <Td>{drink.product_name}</Td>
+                                                    <Td>
+                                                        <Box textAlign={'center'}>
+                                                            <Box textAlign={"center"}>
+                                                                <Image m="auto" width={"80px"} src={drink.url} />
+                                                            </Box>
+                                                            <Text>{drink.product_name}</Text>
+                                                        </Box>
+                                                    </Td>
                                                     <Td isNumeric>{parseInt(drink.price)}</Td>
                                                     <Td>{drink.temp}</Td>
                                                     <Td>{drink.category}</Td>

@@ -4,6 +4,8 @@ import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { SpinnerModal } from './SpinnerModal';
 import { useBoolean } from '@chakra-ui/react';
+import { Drink } from '@/lib/@type/drink';
+import { VendingModal } from './VendingModal';
 
 const mapContainerStyle = {
     height: '100vh',
@@ -33,9 +35,14 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
     //   現在地
     const [currentPosition, setCurrentPosition] = useState<google.maps.LatLng | undefined>();
     //  自販機
+    const [currentVenndings, setCurrentVendings] = useState<VendingType | undefined>();
+    //  自販機
     const [venndings, setVendings] = useState<VendingType[]>(contents);
+    // 飲み物
+    const [drinks, setDrinks] = useState<Drink[]>([])
     // スピナー
     const [isSpinnerOpen, {on: onSpinnerOpen, off: onSpinnerOff}] = useBoolean()
+    const [isVendingModalOpen, {on: onVendingModalOpen, off: onVendingModalOff}] = useBoolean()
     const get_vending = async () => {
         try {
             // onSpinnerOpen()
@@ -50,13 +57,16 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
         }
     }
 
+    // ピンクリック
     const handleMarkerFClick = async (id: number) => {
         console.log(id);
         try {
             const response = await fetch(`/api/get-drinks-by-vending?vid=${id}`)
             const { contents } = await response.json()
             console.log(contents);
-            
+            setDrinks(contents)
+            setCurrentVendings(venndings.find(item => item.id === id))
+            onVendingModalOpen()
         } catch (error) {
             console.log(error);
         }
@@ -82,6 +92,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
     if (!isLoaded) return 'Load中';
     return (
         <>
+            {currentVenndings && <VendingModal drinks={drinks} isOpen={isVendingModalOpen} onClose={onVendingModalOff} vending={currentVenndings}/>}
             <SpinnerModal isOpen={isSpinnerOpen} onClose={onSpinnerOff} />
             <GoogleMap
                 id='map'

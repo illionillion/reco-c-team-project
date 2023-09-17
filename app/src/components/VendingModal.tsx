@@ -19,7 +19,7 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
             case "cash":
                 return "現金"
             default:
-                return ""
+                return "~"
         }
     }
 
@@ -30,7 +30,7 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
             case "hot":
                 return "あたかい"
             default:
-                return ""
+                return "~"
         }
     }
 

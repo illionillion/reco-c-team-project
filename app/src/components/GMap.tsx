@@ -8,7 +8,11 @@ const mapContainerStyle = {
     width: '100%',
 };
 
-export const GMap: FC = () => {
+interface GMapProps {
+    contents: VendingType[]
+}
+
+export const GMap: FC<GMapProps> = ({ contents }) => {
     console.log(process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY);
 
     const { isLoaded, loadError } = useLoadScript({
@@ -27,7 +31,7 @@ export const GMap: FC = () => {
     //   現在地
     const [currentPosition, setCurrentPosition] = useState<google.maps.LatLng | undefined>();
     //  自販機
-    const [venndings, setVendings] = useState<VendingType[]>([]);
+    const [venndings, setVendings] = useState<VendingType[]>(contents);
 
     const get_vending = async () => {
         const respocse = await fetch('/api/get-vending-machine')
@@ -69,18 +73,20 @@ export const GMap: FC = () => {
                     console.log(e.latLng);
                     console.log(e.domEvent);
                 }} />}
-                {venndings?.map(vending => {
+                {venndings?.map((vending, index) => {
                     console.log(vending);
-                    
+
                     return (
-                    <MarkerF
-                        position={{
-                            lat: vending.location_x,
-                            lng: vending.location_y
-                        }}
-                        onLoad={onLoad}
-                    />
-                )})}
+                        <MarkerF
+                            key={index}
+                            position={{
+                                lat: parseFloat(vending.location_x),
+                                lng: parseFloat(vending.location_y)
+                            }}
+                            onLoad={onLoad}
+                        />
+                    )
+                })}
             </GoogleMap>
         </>
     );

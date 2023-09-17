@@ -1,8 +1,14 @@
 import { GMap } from '@/components/GMap';
 import { Header } from '@/components/Header';
+import { VendingType } from '@/lib/@type/vending';
+import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
-
-export default function Home() {
+interface HomeProps {
+  contents: VendingType[]
+}
+const Home:NextPage<HomeProps> = ({contents}) => {
+  console.log(contents);
+  
   return (
     <>
       <Head>
@@ -13,8 +19,35 @@ export default function Home() {
       </Head>
       <main>
         <Header/>
-        <GMap/>
+        <GMap contents={contents}/>
       </main>
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+
+  try {
+    
+    // ここでAPIからデータを取得する例（実際のAPIエンドポイントに合わせて変更してください）
+    // const response = await fetch('/api/get-vending-machine');
+    const response = await fetch('http://localhost:3000/api/get-vending-machine');
+    const {contents} = await response.json();
+  
+    return {
+      props: {
+        contents,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    
+    return {
+      props: {
+        contents: [],
+      },
+    };
+  }
+};
+
+export default Home

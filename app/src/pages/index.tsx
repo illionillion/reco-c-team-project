@@ -1,3 +1,4 @@
+import { GMap } from '@/components/GMap';
 import { Header } from '@/components/Header';
 import Head from 'next/head';
 
@@ -12,6 +13,7 @@ export default function Home() {
       </Head>
       <main>
         <Header/>
+        <GMap/>
       </main>
     </>
   );

@@ -1,3 +1,4 @@
+import { VendingType } from '@/lib/@type/vending';
 import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
 import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -8,35 +9,36 @@ const mapContainerStyle = {
 };
 
 export const GMap: FC = () => {
+    console.log(process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY);
 
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: process.env.VITE_GOOGLE_MAP_API_KEY ?? '',
+        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY ?? '',
         language: 'ja',
     });
     const mapRef = useRef<google.maps.Map>();
     const onMapLoad = useCallback((map: google.maps.Map) => {
         mapRef.current = map;
     }, []);
-    
-        const onLoad = (marker: google.maps.Marker) => {
-            console.log('marker: ', marker);
-        };
+
+    const onLoad = (marker: google.maps.Marker) => {
+        console.log('marker: ', marker);
+    };
 
     //   現在地
     const [currentPosition, setCurrentPosition] = useState<google.maps.LatLng | undefined>();
+    //  自販機
+    const [venndings, setVendings] = useState<VendingType[]>([]);
 
     const get_vending = async () => {
-        const respocse = await fetch ('/api/get-vending-machine')
-        const data = await respocse.json()
-        console.log(data);
-        
+        const respocse = await fetch('/api/get-vending-machine')
+        const { contents } = await respocse.json()
+        console.log(contents);
+        setVendings(venndings)
     }
 
     useEffect(() => {
-        console.log("!!");
-        
+
         navigator.geolocation.getCurrentPosition((pos) => {
-            console.log("!!!");
             const lat = pos.coords.latitude;
             const lng = pos.coords.longitude;
             const latlng = new google.maps.LatLng(lat, lng); //中心の緯度, 経度
@@ -67,13 +69,18 @@ export const GMap: FC = () => {
                     console.log(e.latLng);
                     console.log(e.domEvent);
                 }} />}
-                <MarkerF
-                    position={{
-                        lat: 35.6895,
-                        lng: 139.6917,
-                    }}
-                    onLoad={onLoad}
-                />
+                {venndings?.map(vending => {
+                    console.log(vending);
+                    
+                    return (
+                    <MarkerF
+                        position={{
+                            lat: vending.location_x,
+                            lng: vending.location_y
+                        }}
+                        onLoad={onLoad}
+                    />
+                )})}
             </GoogleMap>
         </>
     );

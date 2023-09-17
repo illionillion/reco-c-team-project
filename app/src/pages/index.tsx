@@ -1,5 +1,4 @@
 import { Header } from '@/components/Header';
-import { Button } from '@chakra-ui/react';
 import Head from 'next/head';
 
 export default function Home() {
@@ -13,7 +12,6 @@ export default function Home() {
       </Head>
       <main>
         <Header/>
-        <Button>Hello</Button>
       </main>
     </>
   );

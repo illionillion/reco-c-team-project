@@ -17,6 +17,7 @@ services:
       - DB_USER=${MYSQL_USER}
       - DB_PASSWORD=${MYSQL_PASSWORD}
       - DB_DATABASE=${MYSQL_DATABASE}
+      - GOOGLE_MAP_API_KEY=${GOOGLE_MAP_API_KEY}
     depends_on:
       - mysql
   mysql:

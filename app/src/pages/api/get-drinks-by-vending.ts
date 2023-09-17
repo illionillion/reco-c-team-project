@@ -1,5 +1,5 @@
-import mysql_connection from "@/lib/db/connect_db";
-import { NextApiRequest, NextApiResponse } from "next";
+import mysql_connection from '@/lib/db/connect_db';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,7 +9,7 @@ export default async function handler(
     const connection = await mysql_connection();
     const vid = req.query.vid as string;
     const result = await connection.query(
-      "SELECT * FROM drinks where vid = ?",
+      'SELECT * FROM drinks where vid = ?',
       [vid]
     );
     connection.end();
@@ -17,10 +17,10 @@ export default async function handler(
     console.log(result[0]);
     res
       .status(200)
-      .json({ message: "接続に成功しました。", contents: result[0] });
+      .json({ message: '接続に成功しました。', contents: result[0] });
   } catch (error) {
     res.status(405).json({
-      message: "取得に失敗しました。",
+      message: '取得に失敗しました。',
       error: error,
     });
   }

@@ -23,6 +23,17 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
         }
     }
 
+    const check_temp = (temp: Drink["temp"]) => {
+        switch (temp) {
+            case "cold":
+                return "つめたい"
+            case "hot":
+                return "あたかい"
+            default:
+                return ""
+        }
+    }
+
     return <>
         <Modal isCentered isOpen={isOpen} size="6xl" onClose={onClose}>
             <ModalOverlay />
@@ -65,7 +76,7 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
                                                         </Box>
                                                     </Td>
                                                     <Td isNumeric>{parseInt(drink.price)}</Td>
-                                                    <Td>{drink.temp}</Td>
+                                                    <Td>{check_temp(drink.temp)}</Td>
                                                     <Td>{drink.category}</Td>
                                                 </Tr>;
                                             })

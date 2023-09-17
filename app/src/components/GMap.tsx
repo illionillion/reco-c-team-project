@@ -2,6 +2,8 @@ import { VendingType } from '@/lib/@type/vending';
 import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
 import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { SpinnerModal } from './SpinnerModal';
+import { useBoolean } from '@chakra-ui/react';
 
 const mapContainerStyle = {
     height: '100vh',
@@ -32,15 +34,19 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
     const [currentPosition, setCurrentPosition] = useState<google.maps.LatLng | undefined>();
     //  自販機
     const [venndings, setVendings] = useState<VendingType[]>(contents);
-
+    // スピナー
+    const [isSpinnerOpen, {on: onSpinnerOpen, off: onSpinnerOff}] = useBoolean()
     const get_vending = async () => {
         try {
+            // onSpinnerOpen()
             const respocse = await fetch('/api/get-vending-machine')
             const { contents } = await respocse.json()
             console.log(contents);
             setVendings(venndings)
         } catch (error) {
             console.log(error);
+        } finally {
+            onSpinnerOff()
         }
     }
 
@@ -57,6 +63,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
     }
 
     useEffect(() => {
+        onSpinnerOpen()
 
         navigator.geolocation.getCurrentPosition((pos) => {
             const lat = pos.coords.latitude;
@@ -75,6 +82,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
     if (!isLoaded) return 'Load中';
     return (
         <>
+            <SpinnerModal isOpen={isSpinnerOpen} onClose={onSpinnerOff} />
             <GoogleMap
                 id='map'
                 mapContainerStyle={mapContainerStyle}

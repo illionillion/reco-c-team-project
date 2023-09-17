@@ -34,10 +34,26 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
     const [venndings, setVendings] = useState<VendingType[]>(contents);
 
     const get_vending = async () => {
-        const respocse = await fetch('/api/get-vending-machine')
-        const { contents } = await respocse.json()
-        console.log(contents);
-        setVendings(venndings)
+        try {
+            const respocse = await fetch('/api/get-vending-machine')
+            const { contents } = await respocse.json()
+            console.log(contents);
+            setVendings(venndings)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleMarkerFClick = async (id: number) => {
+        console.log(id);
+        try {
+            const response = await fetch(`/api/get-drinks-by-vending?vid=${id}`)
+            const { contents } = await response.json()
+            console.log(contents);
+            
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
@@ -69,10 +85,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
                 }}
                 onLoad={onMapLoad}
             >
-                {currentPosition && <MarkerF title="現在地" position={currentPosition} onLoad={onLoad} onClick={e => {
-                    console.log(e.latLng);
-                    console.log(e.domEvent);
-                }} />}
+                {currentPosition && <MarkerF title="現在地" position={currentPosition} onLoad={onLoad} />}
                 {venndings?.map((vending, index) => {
                     console.log(vending);
 
@@ -84,6 +97,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
                                 lng: parseFloat(vending.location_y)
                             }}
                             onLoad={onLoad}
+                            onClick={() => handleMarkerFClick(vending.id)}
                         />
                     )
                 })}

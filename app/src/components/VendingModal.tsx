@@ -103,8 +103,8 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
                             <Td>{check_temp(drink.temp)}</Td>
                             <Td>{check_category(drink.category)}</Td>
                           </Tr>;
-                        }) : <Tr>
-                          <Td colSpan={4} textAlign="center">データなし</Td>
+                        }) : <Tr h="lg" >
+                          <Td colSpan={4} rowSpan={5} textAlign="center">データなし</Td>
                         </Tr>
                     }
                   </Tbody>

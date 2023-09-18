@@ -43,7 +43,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   // スピナー
   const [isSpinnerOpen, { on: onSpinnerOpen, off: onSpinnerOff }] = useBoolean();
   const [isVendingModalOpen, { on: onVendingModalOpen, off: onVendingModalOff }] = useBoolean();
-  const get_vending = async () => {
+  const getVending = async () => {
     try {
       // onSpinnerOpen()
       const respocse = await fetch('/api/get-vending-machine');
@@ -83,10 +83,11 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
         const lng = pos.coords.longitude;
         const latlng = new google.maps.LatLng(lat, lng); //中心の緯度, 経度
         setCurrentPosition(latlng);
-        get_vending();
+        getVending();
       }, () => {
-        const latlng = new google.maps.LatLng(35.6812405, 139.7649361); //中心の緯度, 経度
+        const latlng = new google.maps.LatLng(35.66003283140587, 139.70522242457778); //中心の緯度, 経度
         setCurrentPosition(latlng);
+        onSpinnerOff();
       });
     }
   }, [isLoaded]);
@@ -103,8 +104,8 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
         mapContainerStyle={mapContainerStyle}
         zoom={20}
         center={currentPosition ? currentPosition : {
-          lat: 35.6812405,
-          lng: 139.7649361,
+          lat: 35.66003283140587,
+          lng: 139.70522242457778,
         }}
         onLoad={onMapLoad}
       >

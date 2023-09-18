@@ -6,17 +6,16 @@ export const Header: FC = () => {
     <Box as="header" w='100vw' h="16" backgroundColor='blue.700' position='sticky' top={0} px={6} display='flex' justifyContent='center' alignItems='center'>
       <InputGroup flex={1} borderRadius={5} backgroundColor='white' w="50%">
         <InputLeftElement
-          children={<BsSearch color="gray.600" />}
           pointerEvents="none"
-        />
+        >
+          <BsSearch color="gray.600" />
+        </InputLeftElement>
         <Input type="text" placeholder="商品検索" />
         <InputRightAddon
           p={0}
           border="none"
         >
-          <Button borderLeftRadius={0} borderRightRadius={3.3} >
-                        検索
-          </Button>
+          <Button borderLeftRadius={0} borderRightRadius={3.3} >検索</Button>
         </InputRightAddon>
       </InputGroup>
       <Box flex={1} justifyContent="center" display="flex">

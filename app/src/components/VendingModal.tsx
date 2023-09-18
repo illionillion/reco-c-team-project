@@ -86,31 +86,28 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
                       <Th>カテゴリー</Th>
                     </Tr>
                   </Thead>
-                  {
-                    drinks.length > 0 ?
-                      <Tbody>
-                        {
-                          drinks.map((drink, index) => {
-                            return <Tr key={index}>
-                              <Td>
+                  <Tbody>
+                    {
+                      drinks.length > 0 ?
+                        drinks.map((drink, index) => {
+                          return <Tr key={index}>
+                            <Td>
+                              <Box textAlign="center">
                                 <Box textAlign="center">
-                                  <Box textAlign="center">
-                                    <Image m="auto" width="80px" src={drink.url} />
-                                  </Box>
-                                  <Text>{drink.product_name}</Text>
+                                  <Image m="auto" width="80px" src={drink.url} />
                                 </Box>
-                              </Td>
-                              <Td isNumeric>{parseInt(drink.price)}</Td>
-                              <Td>{check_temp(drink.temp)}</Td>
-                              <Td>{check_category(drink.category)}</Td>
-                            </Tr>;
-                          })
-                        }
-                      </Tbody> :
-                      <Box display='flex' justifyContent='center' alignItems="center">
-                        <Text>情報なし</Text>
-                      </Box>
-                  }
+                                <Text>{drink.product_name}</Text>
+                              </Box>
+                            </Td>
+                            <Td isNumeric>{parseInt(drink.price)}</Td>
+                            <Td>{check_temp(drink.temp)}</Td>
+                            <Td>{check_category(drink.category)}</Td>
+                          </Tr>;
+                        }) : <Tr>
+                          <Td colSpan={4} textAlign="center">データなし</Td>
+                        </Tr>
+                    }
+                  </Tbody>
                 </Table>
               </TableContainer>
             </Box>

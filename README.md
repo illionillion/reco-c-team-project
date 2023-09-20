@@ -9,6 +9,8 @@ MYSQL_PORT=ポート
 MYSQL_PASSWORD=パスワード
 MYSQL_DATABASE=DB名
 TZ=タイムゾーン
+GOOGLE_MAP_API_KEY=GoogleMapのAPIキー
+NEXTJS_PORT=Next.jsのポート
 ```
 
 ビルド

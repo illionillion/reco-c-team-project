@@ -10,7 +10,7 @@ services:
     command: sh -c "npm run dev"
     tty: true
     ports:
-      - 3000:3000
+      - ${NEXTJS_PORT}:3000
     environment:
       - DB_HOST=${MYSQL_HOST}
       - DB_PORT=${MYSQL_PORT}

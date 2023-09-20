@@ -6,6 +6,7 @@ import { SpinnerModal } from './SpinnerModal';
 import { useBoolean } from '@chakra-ui/react';
 import type { Drink } from '@/lib/@type/drink';
 import { VendingModal } from './VendingModal';
+import { Header } from './Header';
 
 const mapContainerStyle = {
   height: '100vh',
@@ -17,7 +18,6 @@ interface GMapProps {
 }
 
 export const GMap: FC<GMapProps> = ({ contents }) => {
-  console.log(process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY ?? '',
@@ -32,6 +32,9 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
     console.log('marker: ', marker);
   };
 
+  // 検索ボックス
+  const searchInputRef = useRef<HTMLInputElement>(null)
+
   //   現在地
   const [currentPosition, setCurrentPosition] = useState<google.maps.LatLng | undefined>();
   //  自販機
@@ -42,14 +45,15 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   const [drinks, setDrinks] = useState<Drink[]>([]);
   // スピナー
   const [isSpinnerOpen, { on: onSpinnerOpen, off: onSpinnerOff }] = useBoolean();
+  // モーダル
   const [isVendingModalOpen, { on: onVendingModalOpen, off: onVendingModalOff }] = useBoolean();
   const getVending = async () => {
     try {
       // onSpinnerOpen()
       const respocse = await fetch('/api/get-vending-machine');
       const { contents } = await respocse.json();
-      console.log(contents);
-      setVendings(venndings);
+      // console.log(contents);
+      setVendings(contents);
     } catch (error) {
       console.log(error);
     } finally {
@@ -59,11 +63,11 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
 
   // ピンクリック
   const handleMarkerFClick = async (id: number) => {
-    console.log(id);
+    // console.log(id);
     try {
       const response = await fetch(`/api/get-drinks-by-vending?vid=${id}`);
       const { contents } = await response.json();
-      console.log(contents);
+      // console.log(contents);
       setDrinks(contents);
       setCurrentVendings(venndings.find(item => item.id === id));
       onVendingModalOpen();
@@ -71,6 +75,23 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
       console.log(error);
     }
   };
+
+  const submitSearch = async () => {
+    if (!searchInputRef || !searchInputRef.current || searchInputRef.current.value === '') return
+    try {
+      onSpinnerOpen()
+      
+      const response = await fetch(`/api/search-drink?name=${searchInputRef.current.value}`)
+      const { contents } = await response.json()
+      console.log(contents);
+      // 成功したらドロワー表示して結果を表示
+      
+    } catch (error) {
+      console.log(error);
+    } finally {
+      onSpinnerOff()
+    }
+  }
 
   useEffect(() => {
 
@@ -97,6 +118,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   if (!isLoaded) return 'Load中';
   return (
     <>
+      <Header searchInputRef={searchInputRef} submitSearch={submitSearch} />
       {currentVenndings && <VendingModal drinks={drinks} isOpen={isVendingModalOpen} vending={currentVenndings} onClose={onVendingModalOff} />}
       <SpinnerModal isOpen={isSpinnerOpen} onClose={onSpinnerOff} />
       <GoogleMap
@@ -111,7 +133,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
       >
         {currentPosition && <MarkerF title="現在地" position={currentPosition} onLoad={onLoad} />}
         {venndings?.map((vending, index) => {
-          console.log(vending);
+          // console.log(vending);
 
           return (
             <MarkerF

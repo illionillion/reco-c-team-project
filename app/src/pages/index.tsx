@@ -1,5 +1,4 @@
 import { GMap } from '@/components/GMap';
-import { Header } from '@/components/Header';
 import type { VendingType } from '@/lib/@type/vending';
 import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
@@ -18,7 +17,6 @@ const Home:NextPage<HomeProps> = ({contents}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Header/>
         <GMap contents={contents}/>
       </main>
     </>

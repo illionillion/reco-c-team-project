@@ -34,8 +34,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
 
   // 検索ボックス
   const searchInputRef = useRef<HTMLInputElement>(null);
-
-  //   現在地
+  //  現在地
   const [currentPosition, setCurrentPosition] = useState<google.maps.LatLng | undefined>();
   //  自販機
   const [currentVenndings, setCurrentVendings] = useState<VendingType | undefined>();
@@ -47,6 +46,9 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   const [isSpinnerOpen, { on: onSpinnerOpen, off: onSpinnerOff }] = useBoolean();
   // モーダル
   const [isVendingModalOpen, { on: onVendingModalOpen, off: onVendingModalOff }] = useBoolean();
+  /**
+   * 自販機情報取得
+   */
   const getVending = async () => {
     try {
       const respocse = await fetch('/api/get-vending-machine');
@@ -59,7 +61,10 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
     }
   };
 
-  // ピンクリック
+  /**
+   * ピンクリック時に自販機の飲み物取得
+   * @param id 自販機ID
+   */
   const handleMarkerFClick = async (id: number) => {
     try {
       const response = await fetch(`/api/get-drinks-by-vending?vid=${id}`);
@@ -71,7 +76,10 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
       console.log(error);
     }
   };
-
+  /**
+   * 飲み物を検索
+   * @returns 
+   */
   const submitSearch = async () => {
     if (!searchInputRef || !searchInputRef.current || searchInputRef.current.value === '') return;
     try {
@@ -111,13 +119,12 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
 
 
   if (loadError) return 'Error';
-  if (!isLoaded) return 'Load中';
   return (
     <>
       <Header searchInputRef={searchInputRef} submitSearch={submitSearch} />
       {currentVenndings && <VendingModal drinks={drinks} isOpen={isVendingModalOpen} vending={currentVenndings} onClose={onVendingModalOff} />}
-      <SpinnerModal isOpen={isSpinnerOpen} onClose={onSpinnerOff} />
-      <GoogleMap
+      <SpinnerModal isOpen={isSpinnerOpen && !isLoaded} onClose={onSpinnerOff} />
+      {isLoaded && <GoogleMap
         id='map'
         mapContainerStyle={mapContainerStyle}
         zoom={20}
@@ -141,7 +148,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
             />
           );
         })}
-      </GoogleMap>
+      </GoogleMap>}
     </>
   );
 };

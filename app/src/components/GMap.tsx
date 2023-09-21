@@ -33,7 +33,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   };
 
   // 検索ボックス
-  const searchInputRef = useRef<HTMLInputElement>(null)
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   //   現在地
   const [currentPosition, setCurrentPosition] = useState<google.maps.LatLng | undefined>();
@@ -49,10 +49,8 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   const [isVendingModalOpen, { on: onVendingModalOpen, off: onVendingModalOff }] = useBoolean();
   const getVending = async () => {
     try {
-      // onSpinnerOpen()
       const respocse = await fetch('/api/get-vending-machine');
       const { contents } = await respocse.json();
-      // console.log(contents);
       setVendings(contents);
     } catch (error) {
       console.log(error);
@@ -63,11 +61,9 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
 
   // ピンクリック
   const handleMarkerFClick = async (id: number) => {
-    // console.log(id);
     try {
       const response = await fetch(`/api/get-drinks-by-vending?vid=${id}`);
       const { contents } = await response.json();
-      // console.log(contents);
       setDrinks(contents);
       setCurrentVendings(venndings.find(item => item.id === id));
       onVendingModalOpen();
@@ -77,21 +73,21 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   };
 
   const submitSearch = async () => {
-    if (!searchInputRef || !searchInputRef.current || searchInputRef.current.value === '') return
+    if (!searchInputRef || !searchInputRef.current || searchInputRef.current.value === '') return;
     try {
-      onSpinnerOpen()
+      onSpinnerOpen();
       
-      const response = await fetch(`/api/search-drink?name=${searchInputRef.current.value}`)
-      const { contents } = await response.json()
+      const response = await fetch(`/api/search-drink?name=${searchInputRef.current.value}`);
+      const { contents } = await response.json();
       console.log(contents);
       // 成功したらドロワー表示して結果を表示
       
     } catch (error) {
       console.log(error);
     } finally {
-      onSpinnerOff()
+      onSpinnerOff();
     }
-  }
+  };
 
   useEffect(() => {
 
@@ -133,8 +129,6 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
       >
         {currentPosition && <MarkerF title="現在地" position={currentPosition} onLoad={onLoad} />}
         {venndings?.map((vending, index) => {
-          // console.log(vending);
-
           return (
             <MarkerF
               key={index}

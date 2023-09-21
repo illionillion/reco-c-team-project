@@ -14,7 +14,7 @@ export const Header: FC<HedaerProps> = ({searchInputRef, submitSearch }) => {
         >
           <BsSearch color="gray.600" />
         </InputLeftElement>
-        <Input type="text" placeholder="商品検索" ref={searchInputRef} />
+        <Input ref={searchInputRef} type="text" placeholder="商品検索" />
         <InputRightAddon
           p={0}
           border="none"

@@ -9,7 +9,7 @@ import { VendingModal } from './VendingModal';
 import { Header } from './Header';
 
 const mapContainerStyle = {
-  height: '100vh',
+  height: '100svh',
   width: '100%',
 };
 

@@ -7,7 +7,7 @@ import { useBoolean } from '@chakra-ui/react';
 import type { Drink } from '@/lib/@type/drink';
 import { VendingModal } from './VendingModal';
 import { Header } from './Header';
-import { SearchResult } from '@/lib/@type/search-result';
+import type { SearchResult } from '@/lib/@type/search-result';
 import { ResultDrawer } from './ResultDrawer';
 
 const mapContainerStyle = {
@@ -51,7 +51,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   // 検索結果ドロワー
   const [isResultDrawerOpen, { on: onResultDrawerOpen, off: onResultDrawerOff }] = useBoolean();
   // 飲み物検索結果
-  const [searchResult, setSearchResult] = useState<SearchResult[]>([])
+  const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
   /**
    * 自販機情報取得
    */
@@ -95,11 +95,11 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
       const { contents } = await response.json();
       console.log(contents);
       // 成功したらドロワー表示して結果を表示
-      setSearchResult(contents)
-      onResultDrawerOpen()
+      setSearchResult(contents);
+      onResultDrawerOpen();
     } catch (error) {
       console.log(error);
-      onResultDrawerOff()
+      onResultDrawerOff();
     } finally {
       onSpinnerOff();
     }
@@ -131,7 +131,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
     <>
       <Header searchInputRef={searchInputRef} submitSearch={submitSearch} />
       {currentVenndings && <VendingModal drinks={drinks} isOpen={isVendingModalOpen} vending={currentVenndings} onClose={onVendingModalOff} />}
-      <ResultDrawer isOpen={isResultDrawerOpen} onClose={onResultDrawerOff} searchResult={searchResult} searchWord={searchInputRef.current?.value ?? ''}/>
+      <ResultDrawer isOpen={isResultDrawerOpen} searchResult={searchResult} searchWord={searchInputRef.current?.value ?? ''} onClose={onResultDrawerOff}/>
       <SpinnerModal isOpen={isSpinnerOpen && !isLoaded} onClose={onSpinnerOff} />
       {isLoaded && <GoogleMap
         id='map'

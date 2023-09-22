@@ -14,11 +14,11 @@ export const ResultDrawer: FC<ResultDrawerProps> = ({ isOpen, searchWord, search
     <>
       <Drawer
         isOpen={isOpen}
+        variant='alwaysOpen'
         placement='right'
         onClose={onClose}
-        // finalFocusRef={btnRef}
+        closeOnOverlayClick={false}
       >
-        {/* <DrawerOverlay /> */}
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>検索飲み物「{searchWord}」</DrawerHeader>

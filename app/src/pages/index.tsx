@@ -34,7 +34,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   
     return {
       props: {
-        contents,
+        contents: contents ?? [],
       },
     };
   } catch (error) {

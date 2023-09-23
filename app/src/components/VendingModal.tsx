@@ -1,5 +1,6 @@
 import type { Drink } from '@/lib/@type/drink';
 import type { VendingType } from '@/lib/@type/vending';
+import { translateCategory, translatePay, translateTemp } from '@/lib/translate/translate';
 import { Box, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import type { FC } from 'react';
 
@@ -11,52 +12,6 @@ interface VendingModalProps {
 }
 
 export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, onClose }) => {
-
-  const check_pay = (pay: VendingType['pay']) => {
-    switch (pay) {
-      case 'cashress':
-        return 'キャッシュレス';
-      case 'cash':
-        return '現金';
-      default:
-        return '~';
-    }
-  };
-
-  const check_temp = (temp: Drink['temp']) => {
-    switch (temp) {
-      case 'cold':
-        return 'つめたい';
-      case 'hot':
-        return 'あたかい';
-      default:
-        return '~';
-    }
-  };
-
-  const check_category = (category: Drink['category']) => {
-    switch (category) {
-      case 'soda':
-        return '炭酸';
-      case 'can':
-        return '缶';
-      case 'coffee':
-        return 'コーヒー';
-      case 'energy':
-        return 'エナジードリンク';
-      case 'juice':
-        return 'ジュース';
-      case 'sports':
-        return 'スポーツドリンク';
-      case 'tea':
-        return '茶';
-      case 'water':
-        return '水';
-      default:
-        return '~';
-    }
-  };
-
   return <>
     <Modal isCentered isOpen={isOpen} size="6xl" onClose={onClose}>
       <ModalOverlay />
@@ -68,7 +23,7 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
           <Flex justifyContent='center'>
             <Box flex='1'>
               <Text fontSize="1.5rem" pb={3}>{vending.address}</Text>
-              <Text>支払い方法：{check_pay(vending.pay)}</Text>
+              <Text>支払い方法：{translatePay(vending.pay)}</Text>
               <Flex w="full" gap={5}>
                 <Text>緯度:{vending.location_x}</Text>
                 <Text>経度:{vending.location_y}</Text>
@@ -100,8 +55,8 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
                               </Box>
                             </Td>
                             <Td isNumeric>{parseInt(drink.price)}</Td>
-                            <Td>{check_temp(drink.temp)}</Td>
-                            <Td>{check_category(drink.category)}</Td>
+                            <Td>{translateTemp(drink.temp)}</Td>
+                            <Td>{translateCategory(drink.category)}</Td>
                           </Tr>;
                         }) : <Tr h="lg" >
                           <Td colSpan={4} rowSpan={5} textAlign="center">データなし</Td>

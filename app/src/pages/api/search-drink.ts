@@ -9,7 +9,7 @@ export default async function handler(
     const connection = await mysql_connection();
     const name = req.query.name as string;
     const result = await connection.query(
-      'SELECT * FROM drinks INNER JOIN vending_machine ON drinks.vid = vending_machine.id where product_name = ?',
+      'SELECT * FROM drinks INNER JOIN vending_machine ON drinks.vid = vending_machine.id where product_name LIKE CONCAT("%", ?, "%")',
       [name]
     );
     connection.end();

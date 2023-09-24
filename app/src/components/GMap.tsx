@@ -105,6 +105,14 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
     }
   };
 
+  /**
+   * ピンに移動する
+   * @param latLng 
+   */
+  const panTo = (latLng: google.maps.LatLng | google.maps.LatLngLiteral) => {
+    mapRef.current?.panTo(latLng)
+  }
+
   useEffect(() => {
 
     if (isLoaded) {
@@ -129,9 +137,9 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   if (loadError) return 'Error';
   return (
     <>
-      <Header searchInputRef={searchInputRef} submitSearch={submitSearch} />
+      <Header searchInputRef={searchInputRef} submitSearch={submitSearch}  />
       {currentVenndings && <VendingModal drinks={drinks} isOpen={isVendingModalOpen} vending={currentVenndings} onClose={onVendingModalOff} />}
-      <ResultDrawer isOpen={isResultDrawerOpen} searchResult={searchResult} searchWord={searchInputRef.current?.value ?? ''} onClose={onResultDrawerOff}/>
+      <ResultDrawer panTo={panTo} isOpen={isResultDrawerOpen} searchResult={searchResult} searchWord={searchInputRef.current?.value ?? ''} onClose={onResultDrawerOff}/>
       <SpinnerModal isOpen={isSpinnerOpen && !isLoaded} onClose={onSpinnerOff} />
       {isLoaded && <GoogleMap
         id='map'
@@ -143,7 +151,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
         }}
         onLoad={onMapLoad}
       >
-        {currentPosition && <MarkerF title="現在地" position={currentPosition} onLoad={onLoad} />}
+        {currentPosition && <MarkerF title="現在地" label='現在地' position={currentPosition} onLoad={onLoad} />}
         {venndings?.map((vending, index) => {
           return (
             <MarkerF

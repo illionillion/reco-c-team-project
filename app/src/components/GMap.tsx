@@ -11,7 +11,7 @@ import type { SearchResult } from '@/lib/@type/search-result';
 import { ResultDrawer } from './ResultDrawer';
 
 const mapContainerStyle = {
-  height: '100svh',
+  height: 'calc(100svh - 4rem)',
   width: '100%',
 };
 

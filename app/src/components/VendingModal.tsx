@@ -25,8 +25,8 @@ export const VendingModal: FC<VendingModalProps> = ({ isOpen, vending, drinks, o
               <Text fontSize="1.5rem" pb={3}>{vending.address}</Text>
               <Text>支払い方法：{translatePay(vending.pay)}</Text>
               <Flex w="full" gap={5}>
-                <Text>緯度:{vending.location_x}</Text>
-                <Text>経度:{vending.location_y}</Text>
+                <Text>緯度:{vending.lat}</Text>
+                <Text>経度:{vending.lng}</Text>
               </Flex>
               <Image my={5} src='https://ascii.jp/img/2021/04/05/3182808/o/b87d497b6c9889f9.jpg' />
             </Box>

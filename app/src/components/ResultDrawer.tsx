@@ -13,7 +13,7 @@ interface ResultDrawerProps {
 
 export const ResultDrawer: FC<ResultDrawerProps> = ({ isOpen, searchWord, searchResult, panTo, onClose }) => {
   const handleClick = (item: SearchResult) => {
-    const lating = new google.maps.LatLng(parseFloat(item.location_x), parseFloat(item.location_y))
+    const lating = new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.lng))
     panTo(lating)
   }
   return (

@@ -1,8 +1,8 @@
 CREATE TABLE vending_machine (
     id INT AUTO_INCREMENT PRIMARY KEY,
     address VARCHAR(255) NOT NULL,
-    location_x DECIMAL(9,6) NOT NULL,
-    location_y DECIMAL(9,6) NOT NULL,
+    lat DECIMAL(9,6) NOT NULL,
+    lng DECIMAL(9,6) NOT NULL,
     pay VARCHAR(10) NOT NULL CHECK (pay IN ('cash', 'cashress'))
 );
 
@@ -17,7 +17,7 @@ CREATE TABLE drinks (
     url VARCHAR(255)
 );
 
-INSERT INTO vending_machine (address, location_x, location_y, pay)
+INSERT INTO vending_machine (address, lat, lng, pay)
 VALUES 
 ('東京都中央区1-1-1', 35.6895, 139.6917, 'cash'),
 ('大阪市北区1-1-1', 34.6869, 135.5200, 'cashress'),

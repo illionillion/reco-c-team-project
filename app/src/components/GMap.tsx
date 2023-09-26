@@ -137,7 +137,7 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
   if (loadError) return 'Error';
   return (
     <>
-      <Header searchInputRef={searchInputRef} submitSearch={submitSearch}  />
+      <Header searchInputRef={searchInputRef} submitSearch={submitSearch} onResultDrawerOff={onResultDrawerOff} />
       {currentVenndings && <VendingModal drinks={drinks} isOpen={isVendingModalOpen} vending={currentVenndings} onClose={onVendingModalOff} />}
       <ResultDrawer panTo={panTo} isOpen={isResultDrawerOpen} searchResult={searchResult} searchWord={searchInputRef.current?.value ?? ''} onClose={onResultDrawerOff}/>
       <SpinnerModal isOpen={isSpinnerOpen && !isLoaded} onClose={onSpinnerOff} />
@@ -157,8 +157,8 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
             <MarkerF
               key={index}
               position={{
-                lat: parseFloat(vending.location_x),
-                lng: parseFloat(vending.location_y)
+                lat: parseFloat(vending.lat),
+                lng: parseFloat(vending.lng)
               }}
               onLoad={onLoad}
               onClick={() => handleMarkerFClick(vending.id)}

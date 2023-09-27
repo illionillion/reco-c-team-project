@@ -4,10 +4,7 @@ import type { VendingType } from './vending';
 export interface SearchResult {
   address: VendingType['address'];
   vid: VendingType['id'];
-  location_x: VendingType['location_x'];
-  location_y: VendingType['location_y'];
   lat: VendingType['lat'];
-  location_y: VendingType['location_y'];
   lng: VendingType['lng'];
   pay: VendingType['pay'];
   did: Drink['did'];

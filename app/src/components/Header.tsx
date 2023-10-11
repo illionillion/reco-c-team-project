@@ -8,21 +8,21 @@ interface HedaerProps {
 }
 export const Header: FC<HedaerProps> = ({ searchInputRef, submitSearch, onResultDrawerOff }) => {
   const handleSubmitSearch = (e: FormEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    submitSearch()
-  }
+    e.preventDefault();
+    submitSearch();
+  };
   return (
     <Box as="header" w='100vw' h="16" backgroundColor='blue.700' position='sticky' top={0} px={6} display='flex' justifyContent='center' alignItems='center'>
-      <InputGroup as="form" flex={1} onSubmit={handleSubmitSearch} borderRadius={5} backgroundColor='white' w="50%">
+      <InputGroup as="form" flex={1} borderRadius={5} backgroundColor='white' w="50%" onSubmit={handleSubmitSearch}>
         <InputLeftElement
           pointerEvents="none"
         >
           <BsSearch color="gray.600" />
         </InputLeftElement>
         <Input ref={searchInputRef} type="search" placeholder="商品検索" onChange={e => {
-          if (e.currentTarget.value === "") {
+          if (e.currentTarget.value === '') {
             // モーダルを閉じる
-            onResultDrawerOff()
+            onResultDrawerOff();
           }
         }} />
         <InputRightAddon

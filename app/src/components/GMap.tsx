@@ -110,8 +110,8 @@ export const GMap: FC<GMapProps> = ({ contents }) => {
    * @param latLng 
    */
   const panTo = (latLng: google.maps.LatLng | google.maps.LatLngLiteral) => {
-    mapRef.current?.panTo(latLng)
-  }
+    mapRef.current?.panTo(latLng);
+  };
 
   useEffect(() => {
 

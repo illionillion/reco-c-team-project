@@ -6,12 +6,12 @@ export default function App({ Component, pageProps }: AppProps) {
     Drawer: {
       variants: {
         alwaysOpen: {
-          parts: ["dialog, dialogContainer"],
+          parts: ['dialog, dialogContainer'],
           dialog: {
-            pointerEvents: "auto"
+            pointerEvents: 'auto'
           },
           dialogContainer: {
-            pointerEvents: "none"
+            pointerEvents: 'none'
           }
         }
       }
